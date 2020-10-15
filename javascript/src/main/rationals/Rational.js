@@ -10,11 +10,25 @@ export default class Rational {
 
     this.numerator = Math.trunc(numerator);
     this.denominator = Math.trunc(denominator);
+    
+    if (this.denominator === 0) {
+      throw new Error("The denominator is equal to 0.");
+    }
 
     if (this.numerator !== 0) {
       const greatestCommonDivisor = gcd(this.numerator, this.denominator);
       this.numerator /= greatestCommonDivisor;
       this.denominator /= greatestCommonDivisor;
+    }
+
+    if (this.denominator < 0 ) {
+      if (this.numerator < 0) {
+        this.numerator = Math.abs(this.numerator);
+        this.denominator = Math.abs(this.denominator);
+      } else {
+        this.denominator = Math.abs(this.denominator);
+        this.numerator = -Math.abs(this.numerator);
+      }
     }
   }
 
