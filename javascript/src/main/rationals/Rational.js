@@ -34,6 +34,7 @@ export default class Rational {
 
   toString() {
     return "";
+    
   }
 
   plus(other) {
@@ -62,31 +63,77 @@ export default class Rational {
   }
 
   times(other) {
-    return 42;
+    Rational.verifyIsRational(other);
+    
+    if(other.numerator === 0) {
+      const numerator = 0
+    } 
+    const numerator = (this.numerator * other.numerator);
+    const denominator = (this.denominator * other.denominator);
+    
+    return new Rational(numerator, denominator);
+  
   }
+  
 
   static multiply(first, second) {
-    return 42;
+    Rational.verifyIsRational(first);
+    Rational.verifyIsRational(second);
+
+    return first.times(second);
   }
 
   minus(other) {
-    return 42;
+    Rational.verifyIsRational(other);
+    if (this.numerator === 0)
+      return new Rational(other.numerator, other.denominator);
+    if (other.numerator === 0)
+      return new Rational(this.numerator, this.denominator);
+
+    const numGCD = gcd(this.numerator, other.numerator);
+    const denomGCD = gcd(this.denominator, other.denominator);
+
+    const numerator =
+      (this.numerator / numGCD) * (other.denominator / denomGCD) -
+      (other.numerator / numGCD) * (this.denominator / denomGCD);
+    const denominator = lcm(this.denominator, other.denominator);
+
+    return new Rational(numerator, denominator);
   }
 
   static subtract(first, second) {
-    return 42;
+    Rational.verifyIsRational(first);
+    Rational.verifyIsRational(second);
+
+    return first.minus(second);
   }
 
   reciprocal() {
-    return 42;
+    if (this.denominator === 0 | this.numerator === 0) {
+      throw new Error("The denominator/numerator is equal to 0.");
+    }
+    
+    const numerator = this.denominator;
+    const denominator = this.numerator;
+
+    return new Rational(numerator, denominator);
+
   }
 
   dividedBy(other) {
-    return 42;
+    Rational.verifyIsRational(other);
+    
+    const numerator = (this.numerator * other.denominator);
+    const denominator = (this.denominator * other.numerator);
+    
+    return new Rational(numerator, denominator);
   }
 
   static quotient(first, second) {
-    return 42;
+    Rational.verifyIsRational(first);
+    Rational.verifyIsRational(second);
+
+    return first.dividedBy(second);
   }
 
   static verifyIsRational(object) {
